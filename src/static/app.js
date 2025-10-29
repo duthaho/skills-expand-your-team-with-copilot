@@ -103,11 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dark mode functionality
   function initializeTheme() {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.body.classList.add("dark-mode");
-      themeToggle.textContent = "☀️";
-    } else {
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "☀️";
+      } else {
+        document.body.classList.remove("dark-mode");
+        themeToggle.textContent = "🌙";
+      }
+    } catch (error) {
+      // localStorage not available, use default light theme
+      console.warn("localStorage not available:", error);
       document.body.classList.remove("dark-mode");
       themeToggle.textContent = "🌙";
     }
@@ -119,10 +126,18 @@ document.addEventListener("DOMContentLoaded", () => {
     
     if (isDarkMode) {
       themeToggle.textContent = "☀️";
-      localStorage.setItem("theme", "dark");
+      try {
+        localStorage.setItem("theme", "dark");
+      } catch (error) {
+        console.warn("Cannot save theme preference:", error);
+      }
     } else {
       themeToggle.textContent = "🌙";
-      localStorage.setItem("theme", "light");
+      try {
+        localStorage.setItem("theme", "light");
+      } catch (error) {
+        console.warn("Cannot save theme preference:", error);
+      }
     }
   }
 
