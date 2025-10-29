@@ -555,23 +555,23 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="social-share-container">
         <div class="social-share-label">Share:</div>
         <div class="social-share-buttons">
-          <button class="share-button facebook-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}" title="Share on Facebook">
+          <button class="share-button facebook-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}">
             <span class="share-icon">f</span>
             <span class="tooltip-text">Share on Facebook</span>
           </button>
-          <button class="share-button twitter-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}" title="Share on Twitter">
+          <button class="share-button twitter-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}">
             <span class="share-icon">𝕏</span>
             <span class="tooltip-text">Share on Twitter</span>
           </button>
-          <button class="share-button linkedin-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}" title="Share on LinkedIn">
+          <button class="share-button linkedin-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}">
             <span class="share-icon">in</span>
             <span class="tooltip-text">Share on LinkedIn</span>
           </button>
-          <button class="share-button email-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}" title="Share via Email">
+          <button class="share-button email-share tooltip" data-activity="${name}" data-description="${details.description}" data-schedule="${formattedSchedule}">
             <span class="share-icon">✉</span>
             <span class="tooltip-text">Share via Email</span>
           </button>
-          <button class="share-button copy-link tooltip" data-activity="${name}" title="Copy Link">
+          <button class="share-button copy-link tooltip" data-activity="${name}">
             <span class="share-icon">🔗</span>
             <span class="tooltip-text">Copy Link</span>
           </button>
@@ -938,6 +938,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function fallbackCopyTextToClipboard(text) {
+    // Fallback for legacy browsers that don't support the Clipboard API
+    // Note: document.execCommand('copy') is deprecated but necessary for older browser support
     const textArea = document.createElement("textarea");
     textArea.value = text;
     textArea.style.position = "fixed";
