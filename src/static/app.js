@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
 
+  // Theme toggle element
+  const themeToggle = document.getElementById("theme-toggle");
+
   // Activity categories with corresponding colors
   const activityTypes = {
     sports: { label: "Sports", color: "#e8f5e9", textColor: "#2e7d32" },
@@ -97,6 +100,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchActivities();
   }
+
+  // Dark mode functionality
+  function initializeTheme() {
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "☀️";
+      } else {
+        document.body.classList.remove("dark-mode");
+        themeToggle.textContent = "🌙";
+      }
+    } catch (error) {
+      // localStorage not available, use default light theme
+      console.warn("localStorage not available:", error);
+      document.body.classList.remove("dark-mode");
+      themeToggle.textContent = "🌙";
+    }
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    
+    if (isDarkMode) {
+      themeToggle.textContent = "☀️";
+      try {
+        localStorage.setItem("theme", "dark");
+      } catch (error) {
+        console.warn("Cannot save theme preference:", error);
+      }
+    } else {
+      themeToggle.textContent = "🌙";
+      try {
+        localStorage.setItem("theme", "light");
+      } catch (error) {
+        console.warn("Cannot save theme preference:", error);
+      }
+    }
+  }
+
+  // Event listener for theme toggle
+  themeToggle.addEventListener("click", toggleTheme);
 
   // Check if user is already logged in (from localStorage)
   function checkAuthentication() {
@@ -862,6 +908,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Initialize app
+  initializeTheme();
   checkAuthentication();
   initializeFilters();
   fetchActivities();
